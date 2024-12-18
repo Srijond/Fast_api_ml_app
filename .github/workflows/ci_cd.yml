@@ -46,13 +46,9 @@ jobs:
       - name: Check Docker version
         run: docker --version
 
-      - name: Setup Docker buildx
-        run: |
-          docker buildx create --use
-
       - name: List files in current directory
         run: ls -alh
 
       - name: Build and Push Docker image
         run: |
-          docker buildx build -f Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/fastapi-ci-cd_ml:v1.0.0 . --push
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/fastapi-ci-cd_ml:v1.0.0  --push
