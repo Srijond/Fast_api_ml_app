@@ -47,7 +47,7 @@ jobs:
         run: docker --version
 
       - name: List files in parent directory
-        run: ls -alh /home/runner/work/Fast_api_ml_app
+        run: ls -alh /home/runner/work/Fast_api_ml_app/Fast_api_ml_app
 
       - name: Print current working directory
         run: pwd
