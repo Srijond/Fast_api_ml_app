@@ -46,10 +46,22 @@ jobs:
       - name: Check Docker version
         run: docker --version
 
-      - name: List files in current directory
+      - name: List files in the current directory
         run: ls -alh
 
-      - name: Build and Push Docker image
-        run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/fastapi-ci-cd_ml:v1.0.0 .
+      - name: Print current working directory
+        run: pwd
 
+      - name: Check Docker images
+        run: docker images
+
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/fastapi-ci-cd_ml:v1.0.0 . --progress=plain --verbose
+
+      - name: List Docker images
+        run: docker images
+
+      - name: Push Docker image to Docker Hub
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/fastapi-ci-cd_ml:v1.0.0
