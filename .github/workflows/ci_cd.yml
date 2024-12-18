@@ -57,7 +57,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/fastapi-ci-cd_ml:v1.0.0 . --progress=plain --verbose
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/fastapi-ci-cd_ml:v1.0.0 /home/runner/work/Fast_api_ml_app
 
       - name: List Docker images
         run: docker images
