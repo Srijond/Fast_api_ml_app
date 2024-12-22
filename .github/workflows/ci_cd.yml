@@ -51,7 +51,9 @@ jobs:
 
       - name: Verify Dockerfile
         run: |
-          if [ ! -f Dockerfile ]; then
+          if [ -f Dockerfile ]; then
+            echo "SUCCESS: Dockerfile found in the current directory.";
+          else
             echo "ERROR: Dockerfile not found in the current directory!";
             exit 1;
           fi
