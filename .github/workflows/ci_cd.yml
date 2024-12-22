@@ -68,7 +68,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build --no-cache -f Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/fastapi-ci-cd_ml:v1.0.0 .
+          docker buildx build -t ${{ secrets.DOCKER_USERNAME }}/fastapi-ci-cd_ml:v1.0.0 .
 
       - name: List Docker images
         run: docker images
