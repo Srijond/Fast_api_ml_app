@@ -43,18 +43,15 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Check Docker version
-        run: docker --version
-
-      - name: List files in current directory
-        run: ls -alh
-
-      - name: Verify Dockerfile
+      - name: Debug working directory and Dockerfile
         run: |
-          if [ -f Dockerfile ]; then
-            echo "SUCCESS: Dockerfile found in the current directory.";
+          echo "Current working directory: $(pwd)"
+          ls -alh
+          echo "Looking for Dockerfile in $(pwd)"
+          if [ -f "$(pwd)/Dockerfile" ]; then
+            echo "SUCCESS: Dockerfile found at $(pwd)/Dockerfile";
           else
-            echo "ERROR: Dockerfile not found in the current directory!";
+            echo "ERROR: Dockerfile not found at $(pwd)/Dockerfile!";
             exit 1;
           fi
 
