@@ -12,18 +12,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout the repository code
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Step 2: Set up Python environment
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
           python-version: "3.10.10"
 
+      # Step 3: Install dependencies
       - name: Install dependencies
         run: |
           pip install --no-cache-dir -r requirements.txt
 
+      # Step 4: Run tests
       - name: Run tests
         run: |
           pytest app/test_main.py
@@ -34,33 +38,43 @@ jobs:
     needs: build-and-test
 
     steps:
+      # Step 1: Checkout the repository code
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Step 2: Log in to Docker Hub
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      # Step 3: Verify Docker installation
       - name: Check Docker version
         run: docker --version
 
+      # Step 4: Debug directory structure
       - name: List files in current directory
         run: ls -alh
 
-      - name: List files and check permissions
+      # Step 5: Check if Dockerfile exists
+      - name: Verify Dockerfile
         run: |
-          ls -alh
-          stat Dockerfile
+          if [ ! -f Dockerfile ]; then 
+            echo "ERROR: Dockerfile not found in the current directory!";
+            exit 1; 
+          fi
 
-      - name: Build Docker image (without buildx)
+      # Step 6: Build the Docker image
+      - name: Build Docker image
         run: |
-          docker build --no-cache -t ${{ secrets.DOCKER_USERNAME }}/fastapi-ci-cd_ml:v1.0.0  .
+          docker build --no-cache -t ${{ secrets.DOCKER_USERNAME }}/fastapi-ci-cd_ml:v1.0.0 .
 
+      # Step 7: List Docker images for verification
       - name: List Docker images
         run: docker images
 
-      - name: Push Docker image to Docker Hub
+      # Step 8: Push the Docker image to Docker Hub
+      - name: Push Docker image
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/fastapi-ci-cd_ml:v1.0.0
