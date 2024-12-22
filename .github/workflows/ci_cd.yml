@@ -44,7 +44,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ secrets.DOCKER_USERNAME }}/fastapi-ci-cd_ml
+          images: ${{ secrets.DOCKER_USERNAME }}/fast_api_ml_app
           tags: |
             type=semver,pattern={{version}}
             type=ref,event=branch,pattern={{branch}}
